@@ -38,53 +38,63 @@ function SearchForm({ onChangeValue }) {
 // - Tạo newUser object rồi gửi lên App bằng onAdd()
 
 function AddUser({ onAdd }) {
-    const [name, setName] = React.useState("");
-    const [username, setUsername] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [city, setCity] = React.useState("");
+    const [show, setShow] = React.useState(false);
+    const [form, setForm] = React.useState({
+        name: "", username: "", email: "", city: ""
+    });
 
-    // Gửi user mới lên App
+    const handleChange = (field, value) => {
+        setForm(prev => ({ ...prev, [field]: value }));
+    };
+
     const handleAdd = () => {
-        const newUser = {
-            id: Date.now(), // tạo id giả
-            name,
-            username,
-            email,
-            address: { city }
-        };
+        onAdd({
+            id: Date.now(),
+            name: form.name,
+            username: form.username,
+            email: form.email,
+            address: { city: form.city }
+        });
 
-        onAdd(newUser);
-
-        // reset form
-        setName("");
-        setUsername("");
-        setEmail("");
-        setCity("");
+        setForm({ name: "", username: "", email: "", city: "" });
+        setShow(false);
     };
 
     return (
-        <div style={{ marginBottom: "10px" }}>
-            <input
-                type="text" placeholder="Name"
-                value={name} onChange={(e) => setName(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Username"
-                value={username} onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="email" placeholder="Email"
-                value={email} onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="text" placeholder="City"
-                value={city} onChange={(e) => setCity(e.target.value)}
-            />
+        <>
+            <button onClick={() => setShow(true)}>Thêm người dùng</button>
 
-            <button onClick={handleAdd}>Thêm user</button>
-        </div>
+            {show && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h4>Thêm user</h4>
+
+                        <input placeholder="Name"
+                            value={form.name}
+                            onChange={e => handleChange("name", e.target.value)}
+                        />
+                        <input placeholder="Username"
+                            value={form.username}
+                            onChange={e => handleChange("username", e.target.value)}
+                        />
+                        <input placeholder="Email"
+                            value={form.email}
+                            onChange={e => handleChange("email", e.target.value)}
+                        />
+                        <input placeholder="City"
+                            value={form.city}
+                            onChange={e => handleChange("city", e.target.value)}
+                        />
+
+                        <button onClick={handleAdd}>Lưu</button>
+                        <button onClick={() => setShow(false)}>Hủy</button>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
+
 
 // ---- Component 3: ResultTable ----
 // BƯỚC 4: Hiển thị danh sách người dùng
@@ -151,37 +161,41 @@ function ResultTable({ keyword, user, onAdded }) {
         <div>
             <h3>Danh sách người dùng</h3>
             {editing && (
-                <div style={{ marginBottom: "10px", padding: "10px", border: "1px solid gray" }}>
-                    <h4>Sửa người dùng</h4>
-                    <input
-                        type="text"
-                        value={editing.name}
-                        onChange={(e) => handleEditChange("name", e.target.value)}
-                        placeholder="Name"
-                    />
-                    <input
-                        type="text"
-                        value={editing.username}
-                        onChange={(e) => handleEditChange("username", e.target.value)}
-                        placeholder="Username"
-                    />
-                    <input
-                        type="email"
-                        value={editing.email}
-                        onChange={(e) => handleEditChange("email", e.target.value)}
-                        placeholder="Email"
-                    />
-                    <input
-                        type="text"
-                        value={editing.address.city}
-                        onChange={(e) => handleEditChange("city", e.target.value)}
-                        placeholder="City"
-                    />
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h4>Sửa người dùng</h4>
 
-                    <button onClick={saveUser}>Lưu</button>
-                    <button onClick={() => setEditing(null)}>Hủy</button>
+                        <input
+                            type="text"
+                            value={editing.name}
+                            onChange={(e) => handleEditChange("name", e.target.value)}
+                            placeholder="Name"
+                        />
+                        <input
+                            type="text"
+                            value={editing.username}
+                            onChange={(e) => handleEditChange("username", e.target.value)}
+                            placeholder="Username"
+                        />
+                        <input
+                            type="email"
+                            value={editing.email}
+                            onChange={(e) => handleEditChange("email", e.target.value)}
+                            placeholder="Email"
+                        />
+                        <input
+                            type="text"
+                            value={editing.address.city}
+                            onChange={(e) => handleEditChange("city", e.target.value)}
+                            placeholder="City"
+                        />
+
+                        <button onClick={saveUser}>Lưu</button>
+                        <button onClick={() => setEditing(null)}>Hủy</button>
+                    </div>
                 </div>
             )}
+
 
             <table border="1" cellPadding="5">
                 <thead>

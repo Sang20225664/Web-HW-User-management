@@ -89,3 +89,15 @@ Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển t
 ![step7a](./res_imgs/step7a.png)
 
 ---
+
+## 🎨 Bước 8 – Hoàn thiện giao diện & Modal Form
+
+- Thêm CSS cho bảng, input, button
+- Tạo modal thêm user
+- Tạo modal sửa user
+
+📸 Kết quả:
+![step8](./res_imgs/step8.png)
+![step8a](./res_imgs/step8a.png)
+
+---
