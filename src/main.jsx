@@ -141,6 +141,9 @@ function ResultTable({ keyword, user, onAdded }) {
         setUsers(prev => prev.map(u => u.id === editing.id ? editing : u));
         setEditing(null);
     }
+    function removeUser(id) {
+        setUsers(prev => prev.filter(u => u.id !== id));
+    }
 
     if (loading) return <p>Đang tải dữ liệu...</p>;
 
@@ -202,7 +205,8 @@ function ResultTable({ keyword, user, onAdded }) {
                             <td>
                                 <button onClick={() => editUser(u)}>Sửa</button>
 
-                                <button onClick={() => alert("Xóa sẽ làm bước sau")}>Xóa</button>
+                                <button onClick={() => removeUser(u.id)}>Xóa</button>
+
                             </td>
                         </tr>
                     ))}

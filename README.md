@@ -72,7 +72,20 @@ Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển t
 - Update nội dung bằng controlled input
 - Lưu lại bằng `Array.map()` để thay user theo id
 
-📸 **Kết quả:** (ảnh step6.png)
+📸 **Kết quả:** 
 ![step6](./res_imgs/step6.png)
 ![step6a](./res_imgs/step6a.png)
 
+---
+
+## ❌ Bước 7 – Xóa người dùng (Delete)
+
+- Khi nhấn nút Xóa, truyền id vào hàm `removeUser`
+- Dùng `filter()` để loại bỏ user theo id
+- Cập nhật lại danh sách users
+
+📸 **Kết quả:** 
+![step7](./res_imgs/step7.png)
+![step7a](./res_imgs/step7a.png)
+
+---
