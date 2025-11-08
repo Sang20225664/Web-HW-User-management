@@ -39,16 +39,69 @@ function AddUser({ onAdd }) {
     return <button>Thêm người dùng</button>;
 }
 // ---- Component 3: ResultTable ----
-// Hiển thị bảng kết quả (tạm thời chỉ hiện keyword)
-// Sau này sẽ tải danh sách người dùng từ API ở BƯỚC 4
-function ResultTable({ keyword, user }) {
+// BƯỚC 4: Hiển thị danh sách người dùng
+// - Fetch dữ liệu API 1 lần bằng useEffect
+// - Lưu vào state users
+// - Lọc theo keyword từ props
+// - Render bảng bằng map()
+
+function ResultTable({ keyword, user, onAdded }) {
+    const [users, setUsers] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+
+    // 1. Tải dữ liệu 1 lần khi mount
+    React.useEffect(() => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(res => res.json())
+            .then(data => {
+                setUsers(data);
+                setLoading(false);
+            });
+    }, []);
+
+    // 2. Lọc danh sách theo keyword
+    const filteredUsers = users.filter(
+        (u) =>
+            u.name.toLowerCase().includes(keyword.toLowerCase()) ||
+            u.username.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    if (loading) return <p>Đang tải dữ liệu...</p>;
+
     return (
         <div>
-            <h3>Kết quả</h3>
-            <p>Từ khóa tìm kiếm: {keyword}</p>
+            <h3>Danh sách người dùng</h3>
+            <table border="1" cellPadding="5">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredUsers.map((u) => (
+                        <tr key={u.id}>
+                            <td>{u.id}</td>
+                            <td>{u.name}</td>
+                            <td>{u.username}</td>
+                            <td>{u.email}</td>
+                            <td>{u.address.city}</td>
+                            <td>
+                                <button onClick={() => alert("Sửa sẽ làm bước sau")}>Sửa</button>
+                                <button onClick={() => alert("Xóa sẽ làm bước sau")}>Xóa</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
+
 // ---- Component gốc: App ----
 // Quản lý toàn bộ state và truyền props xuống các component con
 function App() {

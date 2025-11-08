@@ -1,3 +1,5 @@
+// src/components/AddUser.js
+
 function AddUser({ onAdd }) {
     return (
         <div>

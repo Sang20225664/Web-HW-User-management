@@ -33,4 +33,18 @@
 
 📸 **Kết quả:**
 Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển thị bên dưới bảng.
-![step3](.res_imgs/step3.png)
+![step3](./res_imgs/step3.png)
+
+---
+
+## 📦 Bước 4 – Hiển thị danh sách (ResultTable)
+
+- Dùng `useEffect()` để gọi API một lần khi component mount.
+- Lưu dữ liệu vào state `users`.
+- Dùng `Array.filter()` để lọc theo `keyword`.
+- Render bảng bằng `map()`.
+
+📸 **Kết quả:**
+![step4](./res_imgs/step4.png)
+![step4a](./res_imgs/step4a.png)
+![step4b](./res_imgs/step4b.png)
