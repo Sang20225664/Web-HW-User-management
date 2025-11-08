@@ -26,3 +26,11 @@
 ---
 
 ## 🧠 Bước 3 – Chức năng Tìm kiếm
+- Tạo input ở `SearchForm`
+- Gửi giá trị người dùng nhập lên `App` qua callback `onChangeValue`
+- `App` cập nhật state `kw` và truyền xuống `ResultTable`
+- Tạm thời chỉ hiển thị keyword (lọc thực hiện ở bước 4)
+
+📸 **Kết quả:**
+Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển thị bên dưới bảng.
+![step3](.res_imgs/step3.png)

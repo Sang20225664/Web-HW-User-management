@@ -10,6 +10,15 @@
 // Ứng dụng gồm 4 component: App, SearchForm, AddUser, ResultTable
 // Dữ liệu và hàm setState được quản lý tại App (component cha)
 // Các component con chỉ nhận props và gọi callback để báo ngược lên
+// ==========================================
+// BƯỚC 3: CHỨC NĂNG TÌM KIẾM (SEARCHFORM)
+// ==========================================
+// Mục tiêu: truyền dữ liệu tìm kiếm từ component con → cha → ResultTable
+// - SearchForm nhận props onChangeValue (hàm setKeyword từ App)
+// - Khi người dùng gõ vào input, gọi callback để cập nhật kw trong App
+// - ResultTable nhận keyword qua props (chưa lọc dữ liệu ở bước này, chỉ hiển thị)
+
+// Input -> SearchForm -> gọi onChangeValue -> App cập nhật kw -> truyền xuống ResultTable
 
 // ---- Component 1: SearchForm ----
 // Nhận hàm onChangeValue (tức là setKeyword từ App)
