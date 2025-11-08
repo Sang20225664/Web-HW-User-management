@@ -33,11 +33,59 @@ function SearchForm({ onChangeValue }) {
     );
 }
 // ---- Component 2: AddUser ----
-// Hiện tại chỉ tạo nút "Thêm người dùng"
-// Chức năng thêm thật sẽ làm ở BƯỚC 5
+// BƯỚC 5: Form thêm người dùng
+// - Controlled input
+// - Tạo newUser object rồi gửi lên App bằng onAdd()
+
 function AddUser({ onAdd }) {
-    return <button>Thêm người dùng</button>;
+    const [name, setName] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [city, setCity] = React.useState("");
+
+    // Gửi user mới lên App
+    const handleAdd = () => {
+        const newUser = {
+            id: Date.now(), // tạo id giả
+            name,
+            username,
+            email,
+            address: { city }
+        };
+
+        onAdd(newUser);
+
+        // reset form
+        setName("");
+        setUsername("");
+        setEmail("");
+        setCity("");
+    };
+
+    return (
+        <div style={{ marginBottom: "10px" }}>
+            <input
+                type="text" placeholder="Name"
+                value={name} onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                type="text" placeholder="Username"
+                value={username} onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                type="email" placeholder="Email"
+                value={email} onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                type="text" placeholder="City"
+                value={city} onChange={(e) => setCity(e.target.value)}
+            />
+
+            <button onClick={handleAdd}>Thêm user</button>
+        </div>
+    );
 }
+
 // ---- Component 3: ResultTable ----
 // BƯỚC 4: Hiển thị danh sách người dùng
 // - Fetch dữ liệu API 1 lần bằng useEffect
@@ -58,6 +106,12 @@ function ResultTable({ keyword, user, onAdded }) {
                 setLoading(false);
             });
     }, []);
+    // Khi có user mới từ App → thêm vào danh sách
+    React.useEffect(() => {
+        if (user) {
+            setUsers(prev => [...prev, user]);
+        }
+    }, [user]);
 
     // 2. Lọc danh sách theo keyword
     const filteredUsers = users.filter(
@@ -106,14 +160,21 @@ function ResultTable({ keyword, user, onAdded }) {
 // Quản lý toàn bộ state và truyền props xuống các component con
 function App() {
     const [kw, setKeyword] = React.useState("");
+    // lưu user mới thêm
     const [newUser, setNewUser] = React.useState(null);
+
+    const handleAddUser = (user) => {
+        setNewUser(user);
+    };
+
 
     return (
         <div>
             <h1>Quản lý người dùng</h1>
             <SearchForm onChangeValue={setKeyword} />
-            <AddUser onAdd={setNewUser} />
+            <AddUser onAdd={handleAddUser} />
             <ResultTable keyword={kw} user={newUser} />
+
         </div>
     );
 }

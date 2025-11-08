@@ -48,3 +48,19 @@ Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển t
 ![step4](./res_imgs/step4.png)
 ![step4a](./res_imgs/step4a.png)
 ![step4b](./res_imgs/step4b.png)
+
+---
+
+## 🏗️ Bước 5 – Thêm người dùng (AddUser)
+
+- Tạo form nhập user (controlled inputs)
+- Tạo object `newUser` khi nhấn nút
+- Truyền lên App qua `onAdd(newUser)`
+- App truyền user xuống `ResultTable`
+- ResultTable cập nhật state users và re-render
+
+📸 **Kết quả:** 
+![step5](./res_imgs/step5.png)
+![step5a](./res_imgs/step5a.png)
+
+---
