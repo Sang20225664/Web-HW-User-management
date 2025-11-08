@@ -64,3 +64,15 @@ Không thay đổi giao diện nhiều, nhưng khi nhập text, keyword hiển t
 ![step5a](./res_imgs/step5a.png)
 
 ---
+
+## ✏️ Bước 6 – Sửa người dùng (Edit)
+
+- Click nút **Sửa** để mở form edit
+- Deep Copy object user để tránh mutate dữ liệu gốc
+- Update nội dung bằng controlled input
+- Lưu lại bằng `Array.map()` để thay user theo id
+
+📸 **Kết quả:** (ảnh step6.png)
+![step6](./res_imgs/step6.png)
+![step6a](./res_imgs/step6a.png)
+

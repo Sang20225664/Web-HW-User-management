@@ -96,6 +96,8 @@ function AddUser({ onAdd }) {
 function ResultTable({ keyword, user, onAdded }) {
     const [users, setUsers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [editing, setEditing] = React.useState(null);
+
 
     // 1. Tải dữ liệu 1 lần khi mount
     React.useEffect(() => {
@@ -119,12 +121,65 @@ function ResultTable({ keyword, user, onAdded }) {
             u.name.toLowerCase().includes(keyword.toLowerCase()) ||
             u.username.toLowerCase().includes(keyword.toLowerCase())
     );
+    function editUser(user) {
+        setEditing({ ...user, address: { ...user.address } });
+    }
+    function handleEditChange(field, value) {
+        if (field === "city") {
+            setEditing(prev => ({
+                ...prev,
+                address: { ...prev.address, city: value }
+            }));
+        } else {
+            setEditing(prev => ({
+                ...prev,
+                [field]: value
+            }));
+        }
+    }
+    function saveUser() {
+        setUsers(prev => prev.map(u => u.id === editing.id ? editing : u));
+        setEditing(null);
+    }
 
     if (loading) return <p>Đang tải dữ liệu...</p>;
 
     return (
         <div>
             <h3>Danh sách người dùng</h3>
+            {editing && (
+                <div style={{ marginBottom: "10px", padding: "10px", border: "1px solid gray" }}>
+                    <h4>Sửa người dùng</h4>
+                    <input
+                        type="text"
+                        value={editing.name}
+                        onChange={(e) => handleEditChange("name", e.target.value)}
+                        placeholder="Name"
+                    />
+                    <input
+                        type="text"
+                        value={editing.username}
+                        onChange={(e) => handleEditChange("username", e.target.value)}
+                        placeholder="Username"
+                    />
+                    <input
+                        type="email"
+                        value={editing.email}
+                        onChange={(e) => handleEditChange("email", e.target.value)}
+                        placeholder="Email"
+                    />
+                    <input
+                        type="text"
+                        value={editing.address.city}
+                        onChange={(e) => handleEditChange("city", e.target.value)}
+                        placeholder="City"
+                    />
+
+                    <button onClick={saveUser}>Lưu</button>
+                    <button onClick={() => setEditing(null)}>Hủy</button>
+                </div>
+            )}
+
             <table border="1" cellPadding="5">
                 <thead>
                     <tr>
@@ -145,7 +200,8 @@ function ResultTable({ keyword, user, onAdded }) {
                             <td>{u.email}</td>
                             <td>{u.address.city}</td>
                             <td>
-                                <button onClick={() => alert("Sửa sẽ làm bước sau")}>Sửa</button>
+                                <button onClick={() => editUser(u)}>Sửa</button>
+
                                 <button onClick={() => alert("Xóa sẽ làm bước sau")}>Xóa</button>
                             </td>
                         </tr>
